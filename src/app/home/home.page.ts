@@ -11,7 +11,7 @@ export class HomePage implements OnInit{
 
   mensajes: OSNotificationPayload[] = [];
 
-  constructor(private pushService: PushService, private applicationRef: ApplicationRef) {}
+  constructor(public pushService: PushService, private applicationRef: ApplicationRef) {}
 
   ngOnInit(){
     this.pushService.pushListener.subscribe(noti => {
@@ -23,6 +23,11 @@ export class HomePage implements OnInit{
   async ionViewWillEnter(){
     this.mensajes = await this.pushService.getNotificaciones();
     console.log('WillEnter cargar mensajes')
+  }
+
+  async borrarMensajes(){
+   await this.pushService.borrarMensajes();
+   this.mensajes = [];
   }
 
 }
